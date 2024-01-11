@@ -1,0 +1,14 @@
+ul{
+    list-style: none;
+    
+}
+
+div {
+    margin-left: 5px;
+}
+.statistics{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 7px;
+}

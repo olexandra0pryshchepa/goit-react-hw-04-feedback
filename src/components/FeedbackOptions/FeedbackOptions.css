@@ -1,0 +1,11 @@
+.feedback-options{
+    display: flex;
+    gap: 12px;
+    padding-left: 7px;
+} 
+
+button{
+    background-color: beige;
+    border-radius: 4px;
+    border: 1px solid rgb(20, 20, 20);
+}
