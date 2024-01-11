@@ -1,58 +1,54 @@
-import React, { Component } from 'react';
+
+import React, { useState } from 'react';
 
 import { Section } from './Section/Section';
 import { Statistics } from './Statistics/Statistics';
 import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import { Notification } from './Notification/Notification';
 
-export class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+export const App = () => {
+
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+const GoodFeedback = () => {
+    setGood(prevState => prevState + 1);
   };
 
-  handleLeaveFeedback = feedbackType => {
-    this.setState(prevState => ({
-      [feedbackType]: prevState[feedbackType] + 1,
-    }));
+  const NeutralFeedback = () => {
+    setNeutral(prevState => prevState + 1);
   };
 
-  countTotalFeedback = () => {
-    const { good, bad, neutral } = this.state;
-    return good + bad + neutral;
+  const BadFeedback = () => {
+    setBad(prevState => prevState + 1);
   };
+  
 
-  countPositiveFeedbackPercentage = () => {
-    const total = this.countTotalFeedback();
-    if (total === 0) {
-      return 0;
-    }
-    const percentage = (this.state.good / total) * 100;
-    const roundedPercentage = percentage.toFixed(2);
-    return parseFloat(roundedPercentage);
-  };
+  const total = good + neutral + bad;
+  const percentage = total > 0 ? Math.round((good / total) * 100) : 0;
 
-  render() {
-    const total = this.countTotalFeedback();
-    const percentage = this.countPositiveFeedbackPercentage();
+
+  
+   
     return (
       <div>
         <Section title="Please level feedback">
           <FeedbackOptions
-            options={['good', 'neutral', 'bad']}
-            onLeaveFeedback={this.handleLeaveFeedback}
+           onGoodFeedback={GoodFeedback}
+          onNeutralFeedback={NeutralFeedback}
+          onBadFeedback={BadFeedback}
           />
         </Section>
 
         <Section title="Statictics">
-          {this.state.good !== 0 ||
-          this.state.neutral !== 0 ||
-          this.state.bad !== 0 ? (
+          {good !== 0 ||
+          neutral !== 0 ||
+          bad !== 0 ? (
             <Statistics
-              good={this.state.good}
-              bad={this.state.bad}
-              neutral={this.state.neutral}
+              good={good}
+              bad={bad}
+              neutral={neutral}
               total={total}
               percentage={percentage}
             />
@@ -62,5 +58,5 @@ export class App extends Component {
         </Section>
       </div>
     );
-  }
+  
 };
